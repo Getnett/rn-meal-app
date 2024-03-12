@@ -4,7 +4,6 @@ import { FlatList, StyleSheet, View } from "react-native";
 
 import Meal from "../components/Meal";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
-
 // eslint-disable-next-line import/no-named-default
 import { default as MealType } from "../models/meal";
 
@@ -32,7 +31,7 @@ const MealsListScreen: FC<MealsListScreenProps> = () => {
 
     const handleOnPress = (mealId: string) => {
         const mealData = MEALS.find((meal) => meal.id === mealId);
-        // @ts-expect-error
+        // @ts-expect-error I have the navigate prop its complaning for no-reason
         navigation.navigate("mealDetail", {
             mealId: mealData?.id,
         });
@@ -48,6 +47,7 @@ const MealsListScreen: FC<MealsListScreenProps> = () => {
             duration: meal.duration,
             onPress: handleOnPress,
         };
+        // eslint-disable-next-line react/jsx-props-no-spreading
         return <Meal {...mealProps} />;
     };
     return (

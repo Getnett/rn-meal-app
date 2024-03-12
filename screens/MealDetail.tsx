@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useLayoutEffect } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -57,23 +58,14 @@ function MealDetail() {
     const route = useRoute();
     const navigation = useNavigation();
     const params = route.params as { mealId: string };
-    const meal = MEALS.find((meal) => meal.id === params.mealId);
-
-    console.log("mealId", params.mealId, params);
+    const meal = MEALS.find((ml) => ml.id === params.mealId);
 
     useLayoutEffect(() => {
         navigation.setOptions({
             title: meal?.title,
-            headerRight: () => (
-                <IconButton
-                    icon="star"
-                    color="white"
-                    size={24}
-                    onPress={() => {
-                        console.log("I am pressing the button");
-                    }}
-                />
-            ),
+            // defining component during render error below
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerRight: () => <IconButton icon="star" color="white" size={24} onPress={() => {}} />,
         });
     }, []);
 
