@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import { FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -8,17 +9,6 @@ interface MealDetailsProps {
     containerStyle?: object;
     textStyle?: object;
 }
-
-const MealDetails: FC<MealDetailsProps> = ({ duration, complexity, affordability, containerStyle = {}, textStyle = {} }) => (
-    <View style={[styles.details, containerStyle]}>
-        <Text style={[styles.detailItem, textStyle]}>{duration}m</Text>
-        <Text style={[styles.detailItem, textStyle]}>{complexity}</Text>
-        <Text style={[styles.detailItem, textStyle]}>{affordability}</Text>
-    </View>
-);
-
-export default MealDetails;
-
 const styles = StyleSheet.create({
     details: {
         flexDirection: "row",
@@ -31,3 +21,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
 });
+
+const MealDetails: FC<MealDetailsProps> = ({ duration, complexity, affordability, containerStyle = {}, textStyle = {} }) => (
+    <View style={[styles.details, containerStyle]}>
+        <Text style={[styles.detailItem, textStyle]}>{duration}m</Text>
+        <Text style={[styles.detailItem, textStyle]}>{complexity}</Text>
+        <Text style={[styles.detailItem, textStyle]}>{affordability}</Text>
+    </View>
+);
+
+export default MealDetails;
