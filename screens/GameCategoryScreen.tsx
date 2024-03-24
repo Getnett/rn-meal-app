@@ -1,6 +1,6 @@
 import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/src/types";
 import { FC } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 
 import CategoryGridTile from "../components/CategoryGridTile";
 import { CATEGORIES } from "../data/dummy-data";
@@ -10,6 +10,12 @@ import { default as Category } from "../models/category";
 interface GameCategoryScreenProps {
     navigation: NativeStackNavigationHelpers;
 }
+
+// const styles = StyleSheet.create({
+//     rootContainer: {
+//         flex: 1,
+//     },
+// });
 
 const GameCategoryScreen: FC<GameCategoryScreenProps> = ({ navigation }) => {
     const onPressNavigationHandler = (item: Category) => {
@@ -24,9 +30,3 @@ const GameCategoryScreen: FC<GameCategoryScreenProps> = ({ navigation }) => {
 };
 
 export default GameCategoryScreen;
-
-const styles = StyleSheet.create({
-    rootContainer: {
-        flex: 1,
-    },
-});

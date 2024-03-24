@@ -12,21 +12,6 @@ interface MealProps {
     duration: number;
     onPress: (mealId: string) => void;
 }
-const Meal: FC<MealProps> = ({ mealId, title, imageUrl, complexity, affordability, duration, onPress }) => (
-    <View style={styles.mealCard}>
-        <Pressable android_ripple={{ color: "#ccc" }} style={({ pressed }) => (pressed ? styles.cardpressed : null)} onPress={() => onPress(mealId)}>
-            <View style={styles.mealItemWrapper}>
-                <View>
-                    <Image source={{ uri: imageUrl }} style={styles.image} />
-                    <Text style={styles.title}>{title}</Text>
-                </View>
-                <MealDetails duration={duration} complexity={complexity} affordability={affordability} />
-            </View>
-        </Pressable>
-    </View>
-);
-
-export default Meal;
 
 const styles = StyleSheet.create({
     mealCard: {
@@ -72,3 +57,18 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
 });
+const Meal: FC<MealProps> = ({ mealId, title, imageUrl, complexity, affordability, duration, onPress }) => (
+    <View style={styles.mealCard}>
+        <Pressable android_ripple={{ color: "#ccc" }} style={({ pressed }) => (pressed ? styles.cardpressed : null)} onPress={() => onPress(mealId)}>
+            <View style={styles.mealItemWrapper}>
+                <View>
+                    <Image source={{ uri: imageUrl }} style={styles.image} />
+                    <Text style={styles.title}>{title}</Text>
+                </View>
+                <MealDetails duration={duration} complexity={complexity} affordability={affordability} />
+            </View>
+        </Pressable>
+    </View>
+);
+
+export default Meal;

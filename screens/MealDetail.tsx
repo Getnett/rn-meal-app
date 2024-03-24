@@ -2,10 +2,16 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useLayoutEffect } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import IconButton from "../components/IconButton";
 import MealDetails from "../components/MealDetails";
 import { MEALS } from "../data/dummy-data";
+// import { FavouriteContext } from "../store/favaorite-context/FavouriteContext";
+// eslint-disable-next-line import/no-named-default
+import { default as Meal } from "../models/meal";
+import { addToFav, removeMealFromFav } from "../store/redux/faviourteMealReducer";
+import { RootState } from "../store/redux/store";
 
 const styles = StyleSheet.create({
     rootScreen: {
@@ -57,17 +63,31 @@ const styles = StyleSheet.create({
 function MealDetail() {
     const route = useRoute();
     const navigation = useNavigation();
+    const ids = useSelector((state: RootState) => state.faviouriteMeal.ids);
+    // const { ids, addToFav, removeFromFav } = useContext(FavouriteContext);
+    const dispatch = useDispatch();
+
     const params = route.params as { mealId: string };
-    const meal = MEALS.find((ml) => ml.id === params.mealId);
+    const meal = MEALS.find((ml) => ml.id === params.mealId) as Meal;
+
+    const isMealFav = ids.includes(meal.id);
+
+    const handleAddFav = () => {
+        if (!isMealFav) {
+            dispatch(addToFav(meal.id));
+        } else {
+            dispatch(removeMealFromFav(meal.id));
+        }
+    };
 
     useLayoutEffect(() => {
         navigation.setOptions({
             title: meal?.title,
             // defining component during render error below
             // eslint-disable-next-line react/no-unstable-nested-components
-            headerRight: () => <IconButton icon="star" color="white" size={24} onPress={() => {}} />,
+            headerRight: () => <IconButton icon={isMealFav ? "star" : "star-outline"} color="white" size={24} onPress={handleAddFav} />,
         });
-    }, []);
+    }, [isMealFav]);
 
     return (
         <ScrollView style={styles.rootScreen}>

@@ -9,11 +9,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { FC } from "react";
 import { Platform, StyleSheet, View } from "react-native";
+import { Provider } from "react-redux";
 
 import Favorite from "./screens/Favorite";
 import GameCategoryScreen from "./screens/GameCategoryScreen";
 import MealDetail from "./screens/MealDetail";
 import MealsListScreen from "./screens/MealsListScreen";
+import store from "./store/redux/store";
 
 const Drawer = createDrawerNavigator();
 
@@ -70,30 +72,34 @@ const App: FC = () => {
         <View style={styles.container}>
             {/* ios */}
             {/* <SafeAreaView style={styles.safeArea}> */}
-            <NavigationContainer>
-                <Stack.Navigator
-                    screenOptions={{
-                        headerStyle: {
-                            backgroundColor: "#351401",
-                        },
-                        headerTintColor: "#fff",
-                        contentStyle: {
-                            backgroundColor: "#3f2f25",
-                        },
-                    }}
-                >
-                    <Stack.Screen
-                        name="allCategories"
-                        component={DrawerScreen}
-                        options={{
-                            title: "All Categories",
-                            headerShown: false,
+            {/* <FavouriteContextProvider> */}
+            <Provider store={store}>
+                <NavigationContainer>
+                    <Stack.Navigator
+                        screenOptions={{
+                            headerStyle: {
+                                backgroundColor: "#351401",
+                            },
+                            headerTintColor: "#fff",
+                            contentStyle: {
+                                backgroundColor: "#3f2f25",
+                            },
                         }}
-                    />
-                    <Stack.Screen name="MealsList" component={MealsListScreen} />
-                    <Stack.Screen name="mealDetail" component={MealDetail} />
-                </Stack.Navigator>
-            </NavigationContainer>
+                    >
+                        <Stack.Screen
+                            name="allCategories"
+                            component={DrawerScreen}
+                            options={{
+                                title: "All Categories",
+                                headerShown: false,
+                            }}
+                        />
+                        <Stack.Screen name="MealsList" component={MealsListScreen} />
+                        <Stack.Screen name="mealDetail" component={MealDetail} />
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </Provider>
+            {/* </FavouriteContextProvider> */}
             {/* </SafeAreaView> */}
             <StatusBar style="light" />
         </View>

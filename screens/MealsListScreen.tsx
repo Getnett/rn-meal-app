@@ -1,19 +1,11 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { FC, useLayoutEffect } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
 
-import Meal from "../components/Meal";
+import MealList from "../components/MealList";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
-// eslint-disable-next-line import/no-named-default
-import { default as MealType } from "../models/meal";
 
 interface MealsListScreenProps {}
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
 const MealsListScreen: FC<MealsListScreenProps> = () => {
     const route = useRoute();
     const navigation = useNavigation();
@@ -29,32 +21,7 @@ const MealsListScreen: FC<MealsListScreenProps> = () => {
         });
     }, [navigation, catgoryTitle]);
 
-    const handleOnPress = (mealId: string) => {
-        const mealData = MEALS.find((meal) => meal.id === mealId);
-        // @ts-expect-error I have the navigate prop its complaning for no-reason
-        navigation.navigate("mealDetail", {
-            mealId: mealData?.id,
-        });
-    };
-
-    const renderMeal = (meal: MealType) => {
-        const mealProps = {
-            mealId: meal.id,
-            title: meal.title,
-            imageUrl: meal.imageUrl,
-            complexity: meal.complexity,
-            affordability: meal.affordability,
-            duration: meal.duration,
-            onPress: handleOnPress,
-        };
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        return <Meal {...mealProps} />;
-    };
-    return (
-        <View style={styles.container}>
-            <FlatList data={mealsToDisplay} renderItem={({ item }) => renderMeal(item)} keyExtractor={(item) => item.id} />
-        </View>
-    );
+    return <MealList data={mealsToDisplay} />;
 };
 
 export default MealsListScreen;
